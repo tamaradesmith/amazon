@@ -1,0 +1,28 @@
+<%= render :partial => 'navbar'%>
+
+<h1> Bill Splitter Page </h1>
+
+<div>
+
+<%= form_tag("bill_splitter", class: "contact-form", method: 'post') do %>
+    <%= label_tag(:amount, "Amount") %>
+
+    <%= text_field_tag(:amount)  %>
+    <%= label_tag(:tax, "tax") %>
+    <%= text_field_tag(:tax) %>
+    <%= label_tag(:tip, "Tip") %>
+    <%=  text_field_tag(:tip) %>
+    <%= label_tag(:people, "Number of people") %>
+    <%= text_field_tag(:people) %>
+    <%= submit_tag("Submit") %>
+<% end %>
+
+<% if @pay.to_s != "NaN" %>
+<%= @pay %>
+
+<% end  %>
+
+
+</div>
+
+

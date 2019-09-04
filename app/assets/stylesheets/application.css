@@ -1,0 +1,32 @@
+@import url(reset.css);
+
+body{
+    background: teal;
+    font-size: 2em;
+}
+.navbar{
+    color: aliceblue;
+    background: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 75px;
+}
+.nav-item{
+
+color: goldenrod;
+text-decoration: none;
+
+}
+.nav-item:hover{
+    color: rgb(231, 220, 191);
+}
+.box{
+    justify-content: center;
+    /* border: 2px solid goldenrod; */
+    font-size: .9em;
+    padding: 1em;
+    margin: .5em 1em;
+
+}
