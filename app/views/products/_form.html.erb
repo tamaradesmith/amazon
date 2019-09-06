@@ -1,0 +1,43 @@
+
+
+<% if  @product.errors.any?  %>
+    <ul>
+        <% @product.errors.full_messages.each do |msg|  %>
+            <li>
+                
+            <%=  msg %>
+
+            </li>
+            
+        <% end %>
+        
+    </ul>
+<% end %>
+
+
+<div class="flex box-form">
+<%=  form_for @product do |f| %>
+<div class="flex-form-item">
+
+    <%= f.label :title, class:"form-text" %>
+    <%= f.text_field :title %>
+
+</div>
+
+<div class="flex-form-item " >
+    <%= f.label :description, class:"form-text" %>
+    <%= f.text_field :description %>
+</div>
+
+<div class="flex-form-item">
+    <%= f.label :price, class:"form-text" %>
+    <%= f.text_field :price %>
+</div>
+
+<div class="flex-form-btn">
+<%= f.submit class:'form-btn' %>
+</div>
+
+
+<% end  %>
+</div>

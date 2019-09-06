@@ -1,32 +1,135 @@
 @import url(reset.css);
 
-body{
-    background: teal;
-    font-size: 2em;
+body {
+  background: rgb(2, 49, 4);
+  font-size: 2em;
+  color: aliceblue;
 }
-.navbar{
+.article {
+  padding: 0.5em 1em;
+}
+.border {
+  border: 1px solid white;
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.flex-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border: 1px solid pink;
+}
+.flex-form-item {
+  color: aliceblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.25em 1em;
+}
+
+.form-text {
+  margin: 0 1em;
+}
+.flex-form-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0.25em 1em;
+}
+.form-btn {
+  color: aliceblue;
+  font-size: 0.75em;
+  padding: 0.5em 1em;
+  background: transparent;
+  border: 3px solid gold;
+}
+.form-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.navbar {
+  color: aliceblue;
+  background: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 75px;
+}
+.nav-item {
+  color: goldenrod;
+  text-decoration: none;
+}
+.nav-item:hover {
+  color: rgb(231, 220, 191);
+}
+.box {
+  justify-content: center;
+  font-size: 0.9em;
+  padding: 1em;
+  margin: 0.5em 1em;
+}
+.box-form {
+  max-width: 500px;
+  box-shadow: 2px 2px 15px goldenrod;
+  margin: 1em auto;
+}
+
+.product-box {
+  border: 1px solid black;
+  width: 30%;
+  min-height: 150px;
+  background: rgba(255, 250, 205, 0.5);
+  margin: 0.5em;
+  padding: 0.5em;
+}
+.product-header {
+  text-decoration: none;
+  font-size: 1.25em;
+  color: goldenrod;
+}
+.underline {
+  border-bottom: 2px solid black;
+  padding: 0 0 0.25em;
+  margin-bottom: 0.5em;
+}
+.title {
+  font-size: 2em;
+  text-align: center;
+  background: rgba(255, 250, 205, 0.5);
+  color: black;
+}
+.show-product {
+  max-width: 500px;
+  padding: 1em;
+  box-shadow: 2px 2px 15px goldenrod;
+  margin: 1em auto;
+}
+.show-body {
+  padding: 0.75em 0.25em;
+}
+h4 {
+  font-size: 1.25em;
+}
+.show-btn {
+  
+  font-size: .75em;
+  padding: 0.35em 1em;
+  background: transparent;
+
+  text-decoration: none;
+}
+.show-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.delete-btn{
+    border: 2px solid red;
+    color: red;
+}
+.edit-btn{
     color: aliceblue;
-    background: black;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    min-height: 75px;
-}
-.nav-item{
-
-color: goldenrod;
-text-decoration: none;
-
-}
-.nav-item:hover{
-    color: rgb(231, 220, 191);
-}
-.box{
-    justify-content: center;
-    /* border: 2px solid goldenrod; */
-    font-size: .9em;
-    padding: 1em;
-    margin: .5em 1em;
-
+  border: 2px solid gold;
 }

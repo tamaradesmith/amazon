@@ -1,0 +1,27 @@
+<div class="title underline"> 
+ Product Page
+</div>
+
+<div class="show-product flex-column">
+<div class ="flex underline">
+<h4>
+<%= @product.title %>
+
+</h4>
+<p>
+<%=number_to_currency( @product.price) %>
+ </p>
+</div>
+
+<p class="show-body">
+<%= @product.description %>
+</p>
+<div class="flex">
+
+ <%=  link_to "Edit", edit_product_path(@product), class:"show-btn edit-btn"%>
+
+<%= link_to "Delete", product_path(@product), class:"delete-btn show-btn", method: :delete, data: {confirm: "Are you Sure?"}  %>
+
+
+</div>
+</div>

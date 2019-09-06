@@ -1,0 +1,17 @@
+<div class="title underline"> 
+Product Page
+</div>
+
+<div class="article flex">
+<% @products.each do |product| %>
+
+<div class="product-box ">
+<h3 class="underline"> <%=link_to product.title, product_path(product), class: 'product-header' %> </h3>
+<p class="">
+<%= product.description %>
+</p>
+</div>
+
+<% end  %>
+
+</div>
