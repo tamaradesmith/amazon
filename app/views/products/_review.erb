@@ -1,0 +1,19 @@
+<%= form_with(model: [@product, @review], local: true) do |f| %>
+    <% if @review.errors.any? %>
+        <ul>
+            <% @review.errors.full_message.each do |msg| %>
+            <li>
+              <%= msg %>
+            </li>
+        <% end %>
+        </ul>
+    <% end  %>
+
+
+    <%= f.text_area( :body, cols:50, rows:5, placeholder: "Enter a review here") %>
+
+    <%=   f.submit "Submit Review"%>
+
+
+
+<% end  %>

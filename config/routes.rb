@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'reviews/new'
   root 'welcome#home'
   
   controller :welcome do
@@ -28,4 +29,9 @@ Rails.application.routes.draw do
   patch '/products/:id', {to: 'products#update'}
 
   delete '/products/:id', { to: 'products#destroy'}
+
+  resources :products do
+    resources :reviews, only:
+      [:create, :destroy]
+  end
 end

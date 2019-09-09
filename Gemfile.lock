@@ -56,11 +56,16 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.1, >= 2.1.8)
+    better_errors (2.5.1)
+      coderay (>= 1.0.0)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
     bindex (0.8.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (11.0.1)
+    coderay (1.1.2)
     concurrent-ruby (1.1.5)
     cowsay (0.3.0)
     crass (1.0.4)
@@ -180,6 +185,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  better_errors (~> 2.5, >= 2.5.1)
   bootsnap (>= 1.4.2)
   byebug
   cowsay (~> 0.3.0)

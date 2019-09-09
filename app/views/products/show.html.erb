@@ -25,3 +25,39 @@
 
 </div>
 </div>
+
+<div>
+<%= form_with(model: [@product, @review], local: true) do |f| %>
+    <% if @review.errors.any? %>
+        <ul>
+            <% @review.errors.full_messages.each do |msg| %>
+                    <li>
+                    <%= msg %>
+                    </li>
+            <% end %>
+        </ul>
+    <% end  %>
+
+
+    <%= f.text_area( :body, cols:50, rows:5, placeholder: "Enter a review here") %>
+        <%= f.label :rating %>
+        <%= f.number_field :rating, step: 1    %>
+        <%= f.submit "Submit Review"%>
+    <% end %>
+
+</div>
+
+
+
+<div>
+
+    <% @reviews.each do |review| %>
+        <%= review.body %>
+         <%= review.rating %>
+         <%= link_to("Delete review", product_review_path(@product, review), method: :delete, data: {
+             confirm: "Are you sure?"
+         }) %>
+        <br>
+    <% end  %>
+
+</div>

@@ -1,6 +1,6 @@
 # Add the following validations to your Product model:
 class Product < ApplicationRecord
-
+has_many :reviews, dependent: :destroy
     # The title must be present
     # The title must be unique (case insensitive)
 
