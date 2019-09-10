@@ -4,6 +4,7 @@ body {
   background: rgb(2, 49, 4);
   font-size: 2em;
   color: aliceblue;
+  padding-bottom: 1em;
 }
 .article {
   padding: 0.5em 1em;
@@ -11,17 +12,22 @@ body {
 .border {
   border: 1px solid white;
 }
+.new_product {
+  width: 100%;
+}
 .flex {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .flex-form {
   display: flex;
   flex-direction: column;
+  font-size: 1em;
   padding: 1em;
-  border: 1px solid pink;
+  width: 500px;
+  margin: 0em auto;
 }
 .flex-form-item {
   color: aliceblue;
@@ -29,11 +35,9 @@ body {
   flex-direction: row;
   justify-content: space-between;
   padding: 0.25em 1em;
+  width: 100%;
 }
 
-.form-text {
-  margin: 0 1em;
-}
 .flex-form-btn {
   display: flex;
   flex-direction: row;
@@ -42,10 +46,10 @@ body {
 }
 .form-btn {
   color: aliceblue;
-  font-size: 0.75em;
+  font-size: 0.5em;
   padding: 0.5em 1em;
   background: transparent;
-  border: 3px solid gold;
+  border: 3px solid goldenrod;
 }
 .form-btn:hover {
   background: rgba(255, 255, 255, 0.2);
@@ -75,7 +79,7 @@ body {
 .box-form {
   max-width: 500px;
   box-shadow: 2px 2px 15px goldenrod;
-  margin: 1em auto;
+  margin: 0.25em auto;
 }
 
 .product-box {
@@ -104,7 +108,7 @@ body {
 }
 .show-product {
   max-width: 500px;
-  padding: 1em;
+  padding: 0.25em 0.5em;
   box-shadow: 2px 2px 15px goldenrod;
   margin: 1em auto;
 }
@@ -115,21 +119,85 @@ h4 {
   font-size: 1.25em;
 }
 .show-btn {
-  
-  font-size: .75em;
+  font-size: 0.75em;
   padding: 0.35em 1em;
   background: transparent;
-
   text-decoration: none;
 }
 .show-btn:hover {
   background: rgba(255, 255, 255, 0.2);
 }
-.delete-btn{
-    border: 2px solid red;
-    color: red;
+.delete-btn {
+  border: 2px solid red;
+  color: red;
 }
-.edit-btn{
-    color: aliceblue;
-  border: 2px solid gold;
+.edit-btn {
+  color: aliceblue;
+  border: 2px solid goldenrod;
+}
+.review-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0em auto;
+  width: 500px;
+  padding: 0.25em 0.75em;
+}
+.review {
+  display: flex;
+  justify-content: flex-end;
+}
+.review-btn {
+  font-size: 0.5em;
+  color: aliceblue;
+  padding: 0.25em 0.75em;
+  background: transparent;
+  border: 2px solid goldenrod;
+  justify-self: flex-end;
+  margin-top: 1em;
+}
+.review-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.review-label {
+  padding: 1em 0.25em 0.5em;
+}
+
+.review-label-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 0.5em 0.75em;
+  margin-bottom: 0.5em;
+}
+.flex-1 {
+  flex: 1;
+}
+.review-underline {
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid goldenrod;
+}
+.small-font {
+  font-size: 0.75em;
+}
+.review-delete-btn {
+  font-size: 0.75em;
+  color: red;
+  background: transparent;
+  justify-self: flex-end;
+  text-decoration: none;
+}
+.review-delete-btn:hover {
+  color: rgb(248, 87, 87);
+}
+@media (min-width: 992px) {
+.product-box {
+  border: 1px solid black;
+  width: 30%;
+  min-height: 150px;
+  background: rgba(255, 250, 205, 0.5);
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+
 }

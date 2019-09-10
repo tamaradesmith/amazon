@@ -18,7 +18,8 @@ class ProductsController < ApplicationController
 
   def show
     @review = Review.new
-    @reviews = @product.reviews
+    @reviews = @product.reviews.order(created_at: :desc)  
+
   end
 
   def index 

@@ -22,42 +22,36 @@
 
 <%= link_to "Delete", product_path(@product), class:"delete-btn show-btn", method: :delete, data: {confirm: "Are you Sure?"}  %>
 
-
 </div>
 </div>
 
-<div>
-<%= form_with(model: [@product, @review], local: true) do |f| %>
-    <% if @review.errors.any? %>
-        <ul>
-            <% @review.errors.full_messages.each do |msg| %>
-                    <li>
-                    <%= msg %>
-                    </li>
-            <% end %>
-        </ul>
-    <% end  %>
+    <div>
 
+        <%= render 'products/review' %>
 
-    <%= f.text_area( :body, cols:50, rows:5, placeholder: "Enter a review here") %>
-        <%= f.label :rating %>
-        <%= f.number_field :rating, step: 1    %>
-        <%= f.submit "Submit Review"%>
-    <% end %>
-
-</div>
-
-
+    </div>
 
 <div>
 
-    <% @reviews.each do |review| %>
-        <%= review.body %>
-         <%= review.rating %>
-         <%= link_to("Delete review", product_review_path(@product, review), method: :delete, data: {
+    <div class="review-list">
+     <% @reviews.each do |review| %>
+     <div class="review-underline">
+         <div class="review-label-list">
+    
+             <div class="flex-1"> <%= review.body %> </div>
+             <div> <%= review.rating %> </div>
+        </div>
+      <div class="review-label-list">
+      <div class="small-font flex-1" >
+            <%=  time_ago_in_words(review.created_at) %> 
+        </div>
+
+         <%= link_to("Delete review", product_review_path(@product, review),class:"review-delete-btn", method: :delete, data: {
              confirm: "Are you sure?"
-         }) %>
-        <br>
-    <% end  %>
+         })  %>
+        </div>
+    </div>
+    <% end %>
+ </div>
 
 </div>
