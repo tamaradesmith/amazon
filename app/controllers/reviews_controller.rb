@@ -1,9 +1,13 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!
+
   before_action :find_product, only: [:create, :destroy]
 
+
   def create
-    # @product = Product.find params[:product_id]
+    
     @review = Review.new review_params
+    @review.user = current_user
     @review.product = @product
     if @review.save
       redirect_to product_path(@product),
@@ -18,18 +22,29 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
+    @product = Product.find params[:product_id]
     @review = Review.find params[:id]
-    @review.destroy
-    redirect_to product_path(@product),
-    notice: "review deleted"
+    # @review.user = current_user
+    if can? :crud, @review
+      @review.destroy
+      redirect_to product_path(@product),
+      notice: "review deleted"
+    else
+      redirect_to product_path(@product)
+  
+        #  head :unauthorized
+    end
   end
   
   private
   def review_params
-    params.require(:review).permit(:body, :rating)
+    params.require(:review).permit(:body, :rating, :user)
     
   end
+
    def find_product
        @product = Product.find(params[:product_id])
     end
+
+   
 end

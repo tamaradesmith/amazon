@@ -31,8 +31,8 @@ Rails.application.routes.draw do
   delete '/products/:id', { to: 'products#destroy'}
 
   resources :products do
-    resources :reviews, shallow: true, only:
-      [:create, :destroy]
+    resources :reviews,  only:
+      [:create, :destroy, :delete]
   end
 
     resources :users, only:[:new, :create]

@@ -17,13 +17,16 @@
 
 <p class="show-body">
 <%= @product.description %>
+
 </p>
 <div class="flex">
+<%= @product.user&.full_name%>
+<% if can? :crud, @product %>
 
  <%=  link_to "Edit", edit_product_path(@product), class:"show-btn edit-btn"%>
 
 <%= link_to "Delete", product_path(@product), class:"delete-btn show-btn", method: :delete, data: {confirm: "Are you Sure?"}  %>
-
+<% end %>
 </div>
 </div>
 
@@ -45,12 +48,20 @@
         </div>
       <div class="review-label-list">
       <div class="small-font flex-1" >
+           <%= review.user&.full_name %> 
+        </div>
+      <div class="small-font flex-1" >
             <%=  time_ago_in_words(review.created_at) %> 
         </div>
+     
 
-         <%= link_to("Delete review", product_review_path(@product, review),class:"review-delete-btn", method: :delete, data: {
+    <% if can? :crud, review %>
+    <div>
+         <%= link_to("Delete review", product_review_path(@product, review), method: :delete, class:"review-delete-btn", data: {
              confirm: "Are you sure?"
          })  %>
+         </div>
+         <% end %>
         </div>
     </div>
     <% end %>

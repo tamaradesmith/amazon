@@ -1,5 +1,9 @@
 class ProductsController < ApplicationController
+ before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+ 
   before_action :find_product, only: [:show, :edit, :update, :destroy]
+
+  before_action :authorize!, only: [:edit, :update, :destroy]
 
   def new
     @product = Product.new 
@@ -8,6 +12,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new product_params
+    @product.user = current_user
     if @product.save
       flash[:notice] = "Product created successfully"
         redirect_to product_path(@product)
@@ -53,5 +58,9 @@ private
 
   def find_product
     @product = Product.find(params[:id])
+  end
+
+  def authorize!
+    redirect_to product_path(@product), alert: 'Not autherization' unless can?(:crud, @product)
   end
 end

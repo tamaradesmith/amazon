@@ -25,12 +25,15 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'cancancan'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 gem 'better_errors', '~> 2.5', '>= 2.5.1'
   gem 'simple_form', '~> 4.1'
+  gem 'rspec-rails'
+
 end
 
 group :development do
@@ -42,6 +45,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'faker', '~> 2.2', '>= 2.2.1'
   gem 'cowsay', '~> 0.3.0'
+  gem 'rails-erd', group: :developmen
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

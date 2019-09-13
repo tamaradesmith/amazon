@@ -1,0 +1,757 @@
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (6.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (109.9ms)[0m  [1m[35mDROP DATABASE IF EXISTS "amazon_test"[0m
+  [1m[35m (324.2ms)[0m  [1m[35mCREATE DATABASE "amazon_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "news_articles" CASCADE[0m
+  [1m[35m (16.7ms)[0m  [1m[35mCREATE TABLE "news_articles" ("id" bigserial primary key, "title" character varying, "description" text, "published_at" timestamp, "view_count" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "products" CASCADE[0m
+  [1m[35m (15.0ms)[0m  [1m[35mCREATE TABLE "products" ("id" bigserial primary key, "title" character varying, "description" text, "price" float, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "user_id" bigint)[0m
+  [1m[35m (6.5ms)[0m  [1m[35mCREATE  INDEX  "index_products_on_user_id" ON "products"  ("user_id")[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "reviews" CASCADE[0m
+  [1m[35m (14.1ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" bigserial primary key, "rating" integer, "body" text, "product_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "user_id" bigint)[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_product_id" ON "reviews"  ("product_id")[0m
+  [1m[35m (6.2ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_user_id" ON "reviews"  ("user_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (13.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "email" character varying, "password_digest" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (5.4ms)[0m  [1m[35mALTER TABLE "products" ADD CONSTRAINT "fk_rails_dee2631783"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (3.9ms)[0m  [1m[35mALTER TABLE "reviews" ADD CONSTRAINT "fk_rails_bedd9094d4"
+FOREIGN KEY ("product_id")
+  REFERENCES "products" ("id")
+[0m
+  [1m[35m (3.9ms)[0m  [1m[35mALTER TABLE "reviews" ADD CONSTRAINT "fk_rails_74a66bd6c5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (12.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (2.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20190912182152)[0m
+  [1m[35m (1.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20190904201324),
+(20190904210048),
+(20190906192247),
+(20190910161918),
+(20190910165732),
+(20190910170048);
+
+[0m
+  [1m[35m (14.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (1.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "test"], ["created_at", "2019-09-12 18:30:13.203773"], ["updated_at", "2019-09-12 18:30:13.203773"]]
+  [1m[35m (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "a37cdd7adf1e173ce46d575febd8ab747b58a398"], ["created_at", "2019-09-12 18:30:13.215606"], ["updated_at", "2019-09-12 18:30:13.215606"]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Create (0.5ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Canada Votes"], ["created_at", "2019-09-12 18:47:30.774719"], ["updated_at", "2019-09-12 18:47:30.774719"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Canada Votes"], ["created_at", "2019-09-12 18:48:48.852173"], ["updated_at", "2019-09-12 18:48:48.852173"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Canada Votes"], ["created_at", "2019-09-12 18:49:03.871134"], ["updated_at", "2019-09-12 18:49:03.871134"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Canada Votes"], ["created_at", "2019-09-12 18:49:13.006887"], ["updated_at", "2019-09-12 18:49:13.006887"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Canada Votes"], ["created_at", "2019-09-12 18:51:46.694064"], ["updated_at", "2019-09-12 18:51:46.694064"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Canada Votes"], ["created_at", "2019-09-12 18:58:17.592264"], ["updated_at", "2019-09-12 18:58:17.592264"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-12 19:00:00.838621"], ["updated_at", "2019-09-12 19:00:00.838621"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "published_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Hudsons asks if it's time yet"], ["description", "Hudson is again dispointed"], ["published_at", "2019-09-08 19:10:56.016550"], ["created_at", "2019-09-12 19:10:56.026561"], ["updated_at", "2019-09-12 19:10:56.026561"]]
+  [1m[35m (7.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) AND "news_articles"."id" != $2 LIMIT $3[0m  [["title", "Hudsons asks if it's time yet"], ["id", 8], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-12 19:11:16.996482"], ["updated_at", "2019-09-12 19:11:16.996482"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-12 19:11:47.444930"], ["updated_at", "2019-09-12 19:11:47.444930"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-12 20:43:34.155718"], ["updated_at", "2019-09-12 20:43:34.155718"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.5ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:21:06.607901"], ["updated_at", "2019-09-13 01:21:06.607901"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:45:51.244573"], ["updated_at", "2019-09-13 01:45:51.244573"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:46:00.517283"], ["updated_at", "2019-09-13 01:46:00.517283"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:46:56.908804"], ["updated_at", "2019-09-13 01:46:56.908804"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:48:10.166674"], ["updated_at", "2019-09-13 01:48:10.166674"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:50:45.895194"], ["updated_at", "2019-09-13 01:50:45.895194"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:50:58.382625"], ["updated_at", "2019-09-13 01:50:58.382625"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:51:51.415511"], ["updated_at", "2019-09-13 01:51:51.415511"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:53:42.535592"], ["updated_at", "2019-09-13 01:53:42.535592"]]
+  [1m[35m (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:55:18.635294"], ["updated_at", "2019-09-13 01:55:18.635294"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:55:38.953688"], ["updated_at", "2019-09-13 01:55:38.953688"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "time-shifting article"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.2ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "published_at", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "time-shifting article"], ["description", "this should break"], ["published_at", "2019-09-09 01:55:38.961828"], ["created_at", "2019-09-13 01:55:38.962892"], ["updated_at", "2019-09-13 01:55:38.962892"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:55:56.493283"], ["updated_at", "2019-09-13 01:55:56.493283"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:56:22.956321"], ["updated_at", "2019-09-13 01:56:22.956321"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:56:41.656226"], ["updated_at", "2019-09-13 01:56:41.656226"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 01:58:33.887565"], ["updated_at", "2019-09-13 01:58:33.887565"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.9ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (1.5ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Canada Votes"], ["description", "here we go again"], ["created_at", "2019-09-13 02:00:10.576420"], ["updated_at", "2019-09-13 02:00:10.576420"]]
+  [1m[35m (0.4ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Canada Votes"], ["LIMIT", 1]]
+  [1m[35m (0.8ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mNewsArticle Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE "news_articles"."title" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "Hudsons asks if it's time yet"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.5ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Hudson Asks If Its Time Yet"], ["description", "hi there"], ["created_at", "2019-09-13 02:14:44.058160"], ["updated_at", "2019-09-13 02:14:44.058160"]]
+  [1m[35m (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Hudson Asks If Its Time Yet"], ["description", "hi there"], ["created_at", "2019-09-13 02:14:55.608541"], ["updated_at", "2019-09-13 02:14:55.608541"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.5ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Hudson Asks If Its Time Yet"], ["description", "hi there"], ["created_at", "2019-09-13 02:17:23.201910"], ["updated_at", "2019-09-13 02:17:23.201910"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.5ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Hudson Asks If Its Time Yet"], ["description", "hi there"], ["created_at", "2019-09-13 02:17:28.537789"], ["updated_at", "2019-09-13 02:17:28.537789"]]
+  [1m[35m (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.4ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Hudson Asks If Its Time Yet"], ["description", "hi there"], ["created_at", "2019-09-13 02:17:50.267967"], ["updated_at", "2019-09-13 02:17:50.267967"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.2ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Hudson Asks If Its Time Yet"], ["description", "hi there"], ["created_at", "2019-09-13 02:19:25.984607"], ["updated_at", "2019-09-13 02:19:25.984607"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mNewsArticle Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "news_articles" WHERE LOWER("news_articles"."title") = LOWER($1) LIMIT $2[0m  [["title", "hudson asks if its time yet"], ["LIMIT", 1]]
+  [1m[36mNewsArticle Create (0.3ms)[0m  [1m[32mINSERT INTO "news_articles" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Hudson Asks If Its Time Yet"], ["description", "hi there"], ["created_at", "2019-09-13 02:20:05.091312"], ["updated_at", "2019-09-13 02:20:05.091312"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31mROLLBACK[0m
