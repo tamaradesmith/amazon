@@ -41,5 +41,6 @@ alias_action :create, :read, :update, :destroy, to: :crud
     can :crud, Review do |review|
       review.user == user
     end
+    
   end
 end

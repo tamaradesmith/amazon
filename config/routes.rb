@@ -41,4 +41,5 @@ Rails.application.routes.draw do
       delete :destroy, on: :collection
     end
 
+    resources :news_articles, only: [:new, :create, :show, :destroy, :index, :edit, :update]
 end
