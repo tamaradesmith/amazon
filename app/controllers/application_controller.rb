@@ -17,7 +17,7 @@ private
 
         def authenticate_user!
             unless user_signed_in?
-                flash[:alert] = "sign in please"
+                flash[:alert] = "Sign in please!"
                 redirect_to new_session_path
             end
         end

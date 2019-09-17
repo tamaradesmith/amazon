@@ -1,5 +1,6 @@
 class NewsArticle < ApplicationRecord
-
+    belongs_to :user
+    
     before_save :to_titleized
 
     validates :title, presence: true, uniqueness: {case_sensitive:false}

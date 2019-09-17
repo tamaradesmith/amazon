@@ -1,6 +1,6 @@
 class NewsArticlesController < ApplicationController
-
-    before_action :find_news_article, only: [:edit, :update]
+    before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+    before_action :find_news_article, only: [:edit, :update, :destroy]
 
     def new
         @news_article = NewsArticle.new
@@ -9,10 +9,12 @@ class NewsArticlesController < ApplicationController
     def create
 
         @news_article = NewsArticle.new news_article_params
+        @news_article.user = current_user
+
         if @news_article.save
             redirect_to @news_article
-            else
-                render :new 
+        else
+            render :new 
         end
     end
 
@@ -32,13 +34,23 @@ class NewsArticlesController < ApplicationController
     end
 
     def edit
+        if !can?(:edit, @news_article)
+            flash[:danger] = "Can't delete other users news articles"
+            redirect_to root_path
 
+        end
     end
 
     def update
+
+        if !can?(:update, @news_article)
+            redirect_to root_path
+        end
+
        if @news_article.update news_article_params
         
         redirect_to @news_article
+
        else
         
         render :edit

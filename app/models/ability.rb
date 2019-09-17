@@ -41,6 +41,11 @@ alias_action :create, :read, :update, :destroy, to: :crud
     can :crud, Review do |review|
       review.user == user
     end
+
+    can :crud, NewsArticle do |news_article|
+      news_article.user == user
+    end
     
   end
+
 end
