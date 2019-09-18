@@ -19,7 +19,7 @@ super_user = User.create(
     last_name: "Smith",
     email: "aurora@aurora.com",
     password: PASSWORD,
-    # is_admin: true
+    is_admin: true
 )
 
 NUM_USERS.times do

@@ -25,10 +25,12 @@ class ProductsController < ApplicationController
     @review = Review.new
     @reviews = @product.reviews.order(created_at: :desc)  
 
+
   end
 
   def index 
     @products = Product.all
+    
   end
 
   def edit

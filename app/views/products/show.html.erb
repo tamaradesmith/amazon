@@ -53,7 +53,29 @@
       <div class="small-font flex-1" >
             <%=  time_ago_in_words(review.created_at) %> 
         </div>
+        <div>
+            <%= pluralize(review.likers.count, 'like') %>
+        </div>
      
+<div>
+
+  <% if user_signed_in?  %>     
+
+    <% like = current_user.likes.find_by_review_id(review.id) %>
+    
+    <% if like.present? && can?(:destroy, like) %>
+
+
+        <%= link_to "Unlike", like_path(like), method: :delete %>
+
+    <% elsif can?(:like, review) %>
+
+        <%= link_to 'Like', product_review_likes_path(@product, review), method: :post %>
+   
+    <% end %>
+<% end %>
+
+</div>
 
     <% if can? :crud, review %>
     <div>
