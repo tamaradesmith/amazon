@@ -1,0 +1,14 @@
+
+<div class="article flex">
+
+    <% @tags.each do |tag| %>
+
+        <div class="product-box ">
+
+            <h3 class="underline"> <%=link_to tag.name, products_path(tag: tag.name), class: 'product-header' %> </h3>
+
+        </div>
+
+    <% end  %>
+
+</div>

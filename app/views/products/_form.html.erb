@@ -34,6 +34,13 @@
     <%= f.text_field :price %>
 </div>
 
+<div class="flex-form-item">
+
+<%= f.label :tag_names %>
+<%= f.text_field :tag_names%>
+
+</div>
+
 <div class="flex-form-btn">
 <%= f.submit class:'form-btn' %>
 </div>
@@ -41,3 +48,20 @@
 
 <% end  %>
 </div>
+
+
+<script>
+    $("#product_tag_names").selectize({
+        delimiter: ',',
+        persist: false,
+        labelField: "name",
+        valueField: "name",
+        searchField: "name",
+        options: <%= Tag.select(:name).to_json(except: [:id]).html_safe  %>,
+        create(input)  {
+            return {
+                name: input
+            }
+        }
+    });
+</script>

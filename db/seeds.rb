@@ -8,10 +8,14 @@
 Product.destroy_all
 Review.destroy_all
 User.destroy_all
+Like.destroy_all
+Tag.destroy_all
 
 
 NUM_USERS = 15
 NUM_PRODUCTS = 1000
+NUM_TAGS = 12
+
 PASSWORD = 'hudson'
 
 super_user = User.create(
@@ -19,7 +23,7 @@ super_user = User.create(
     last_name: "Smith",
     email: "aurora@aurora.com",
     password: PASSWORD,
-    is_admin: true
+    # is_admin: true
 )
 
 NUM_USERS.times do
@@ -35,6 +39,14 @@ NUM_USERS.times do
 
 
 users = User.all
+
+NUM_TAGS.times do
+    Tag.create(
+          name: Faker::Space.constellation
+    )
+end
+
+tags = Tag.all
 
 NUM_PRODUCTS.times do
     created_at = Faker::Date.backward(days: 365 * 5)
@@ -53,15 +65,23 @@ NUM_PRODUCTS.times do
                 user:users.sample,
                 rating: rand(1..5)
             )
-            end
+
+         end
+        p.reviews.map do |review|
+        review.likers = users.shuffle.slice(0, rand(users.count))
+        end
+        p.tags = tags.shuffle.slice(0, rand(tags.count))
+
         end
 
 end
     products = Product.all
     reviews = Review.all
+    likes = Like.all
 
     puts Cowsay.say("Generated #{products.count} products", :frogs)
     puts Cowsay.say("Generated #{reviews.count} answers", :stegosaurus)
-puts Cowsay.say("Generated #{users.count} users", :frogs)
+    puts Cowsay.say("Generated #{users.count} users", :frogs)
+    puts Cowsay.say("Genetated #{tags.count} users", :kitty)
 
 puts "login with #{super_user.email} and password: #{PASSWORD}"

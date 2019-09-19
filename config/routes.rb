@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'tags/index'
   get 'reviews/new'
   root 'welcome#home'
   
@@ -38,7 +39,9 @@ Rails.application.routes.draw do
       get :liked, on: :collection
 
       end
-  end
+
+    end
+    resources :tags, shallow: true, only: [:index, :show]
 
     resources :users, only:[:new, :create]
 

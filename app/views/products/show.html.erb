@@ -4,23 +4,32 @@
  Product Page
 </div>
 
-<div class="show-product flex-column">
-<div class ="flex underline">
+    <div class="show-product flex-column">
+    <div class ="flex underline">
 <h4>
-<%= @product.title %>
+    <%= @product.title %>
 
 </h4>
-<p>
-<%=number_to_currency( @product.price) %>
- </p>
+    <p>
+        <%=number_to_currency( @product.price) %>
+    </p>
 </div>
 
 <p class="show-body">
 <%= @product.description %>
 
+
 </p>
 <div class="flex">
-<%= @product.user&.full_name%>
+<p> <%= @product.user&.full_name%> </p>
+<p>
+
+<% @product.tags.each do |tag|  %>
+<%= link_to(tag.name, products_path(tag: tag.name)) %>
+<% end  %>
+ 
+
+<p>
 <% if can? :crud, @product %>
 
  <%=  link_to "Edit", edit_product_path(@product), class:"show-btn edit-btn"%>

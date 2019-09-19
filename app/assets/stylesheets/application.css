@@ -1,4 +1,6 @@
+@import 'selectize.bootstrap3';
 @import url(reset.css);
+@import 'selectize';
 
 body {
   background: rgb(2, 49, 4);

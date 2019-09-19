@@ -1,17 +1,22 @@
 <div class="title underline"> 
+<% if @tag.present? %>
+    Product Tag: <%= @tag.name%>
+    <% else %>
+
 Product Page
+<% end %>
 </div>
+
 
 <div class="article flex">
-<% @products.each do |product| %>
 
-<div class="product-box ">
-<h3 class="underline"> <%=link_to product.title, product_path(product), class: 'product-header' %> </h3>
-<p class="">
-<%= product.description %>
-</p>
-</div>
+    <% @products.each do |product| %>
 
-<% end  %>
+        <div class="product-box ">
+            <h3 class="underline"> <%=link_to product.title, product_path(product), class: 'product-header' %> </h3>
+            <p class=""><%= product.description %></p>
+        </div>
+
+    <% end  %>
 
 </div>
