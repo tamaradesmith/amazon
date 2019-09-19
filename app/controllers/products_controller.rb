@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
     @product = Product.new product_params
     @product.user = current_user
     if @product.save
+      ProductMailer.new_product(@product).deliver_now
       flash[:notice] = "Product created successfully"
         redirect_to product_path(@product)
     else

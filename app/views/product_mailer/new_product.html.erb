@@ -1,0 +1,13 @@
+
+<h3>
+<%= @product.user.full_name %> has create a new product
+</h3>
+
+<h4> <%= @product.title %> </h4>
+<p>
+<%= @product.description %>
+<br/>
+<%= @product.price %>
+<br/>
+
+  <%= link_to("Click here to view your product", product_url(@product)) %>

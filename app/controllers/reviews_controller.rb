@@ -9,7 +9,12 @@ class ReviewsController < ApplicationController
     @review = Review.new review_params
     @review.user = current_user
     @review.product = @product
+    
+   
     if @review.save
+
+      ReviewsMailer.new_review(@review).deliver_now
+
       redirect_to product_path(@product),
       notice: "review Added"
 
