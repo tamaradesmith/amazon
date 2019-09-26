@@ -72,4 +72,5 @@ private
   def authorize!
     redirect_to product_path(@product), alert: 'Not autherization' unless can?(:crud, @product)
   end
+  
 end

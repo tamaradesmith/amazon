@@ -243,7 +243,7 @@ RSpec.describe NewsArticlesController, type: :controller do
 
                 it "should redirect to root_path" do
                      new_title = "#{@news_article.title} New Changes"
-                     byebug
+
                     patch :update, params: {id: @news_article.id, news_article: {title: new_title}}
                     expect(response).to redirect_to root_path
                 end
@@ -273,7 +273,7 @@ RSpec.describe NewsArticlesController, type: :controller do
                 def invalid_request 
                     patch :update, params: {id: @news_article.id, news_article: {title: nil}}
                 end
-                it "it has a valid params" do
+                it "should not update params" do
                     expect{invalid_request}.not_to change {@news_article.reload.title}
                 end
 

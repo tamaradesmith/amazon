@@ -50,4 +50,6 @@ Rails.application.routes.draw do
     end
 
     resources :news_articles, only: [:new, :create, :show, :destroy, :index, :edit, :update]
+
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
 end
