@@ -30,7 +30,7 @@ class ReviewsController < ApplicationController
     @product = Product.find params[:product_id]
     @review = Review.find params[:id]
     # @review.user = current_user
-    if can? :crud, @review
+   if can? :crud, @review
       @review.destroy
       redirect_to product_path(@product),
       notice: "review deleted"

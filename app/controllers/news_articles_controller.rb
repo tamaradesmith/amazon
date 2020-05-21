@@ -7,10 +7,8 @@ class NewsArticlesController < ApplicationController
     end
 
     def create
-
         @news_article = NewsArticle.new news_article_params
-        @news_article.user = current_user
-
+        @news_article.user_id = current_user
         if @news_article.save
             redirect_to @news_article
         else

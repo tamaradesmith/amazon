@@ -18,15 +18,13 @@ class ProductsController < ApplicationController
       flash[:notice] = "Product created successfully"
         redirect_to product_path(@product)
     else
-      render :new
+      render :new 
     end
   end
 
   def show
     @review = Review.new
     @reviews = @product.reviews.order(created_at: :desc)  
-
-
   end
 
   def index 

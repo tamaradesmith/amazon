@@ -14,6 +14,14 @@ Rails.application.routes.draw do
     post :bill_splitter
   end
   
+
+  namespace :api, defaults: {format: :json} do
+    namespace :v1 do
+      resources :products
+      resource :session, only: [:create, :destroy]
+    end
+  end
+
   # get 'welcome/index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
@@ -32,8 +40,7 @@ Rails.application.routes.draw do
   # delete '/products/:id', { to: 'products#destroy'}
 
   resources :products do
-    resources :reviews,  only:
-      [:create, :destroy, :delete] do
+    resources :reviews, shallow: true,  only: [:create, :destroy, :delete] do
 
       resources :likes, shallow: true, only: [:create, :destroy]
       get :liked, on: :collection

@@ -6,14 +6,13 @@
 
     <div class="show-product flex-column">
     <div class ="flex underline">
-<h4>
-    <%= @product.title %>
-
-</h4>
-    <p>
-        <%=number_to_currency( @product.price) %>
-    </p>
-</div>
+        <h4>
+            <%= @product.title %>
+        </h4>
+        <p>
+            <%=number_to_currency( @product.price) %>
+        </p>
+    </div>
 
 <p class="show-body">
 <%= @product.description %>
@@ -24,18 +23,19 @@
 <p> <%= @product.user&.full_name%> </p>
 <p>
 
-<% @product.tags.each do |tag|  %>
-<%= link_to(tag.name, products_path(tag: tag.name)) %>
+    <% @product.tags.each do |tag|  %>
+        <%= link_to(tag.name, products_path(tag: tag.name)) %>
 <% end  %>
  
 
-<p>
-<% if can? :crud, @product %>
+</p>
 
- <%=  link_to "Edit", edit_product_path(@product), class:"show-btn edit-btn"%>
 
-<%= link_to "Delete", product_path(@product), class:"delete-btn show-btn", method: :delete, data: {confirm: "Are you Sure?"}  %>
-<% end %>
+    <% if can? :crud, @product %>
+        <%= link_to "Edit", edit_product_path(@product), class:"show-btn edit-btn"%>
+        <%= link_to "Delete", product_path(@product), class:"delete-btn show-btn", method: :delete, data: {confirm: "Are you Sure?"}  %>
+    <% end %>
+
 </div>
 </div>
 
@@ -68,33 +68,33 @@
      
 <div>
 
-  <% if user_signed_in?  %>     
+<% if user_signed_in?  %>     
 
     <% like = current_user.likes.find_by_review_id(review.id) %>
     
     <% if like.present? && can?(:destroy, like) %>
 
-
         <%= link_to "Unlike", like_path(like), method: :delete %>
 
     <% elsif can?(:like, review) %>
 
-        <%= link_to 'Like', product_review_likes_path(@product, review), method: :post %>
+        <%= link_to 'Like', review_likes_path(review), method: :post %>
    
     <% end %>
+
 <% end %>
 
 </div>
 
     <% if can? :crud, review %>
     <div>
-         <%= link_to("Delete review", product_review_path(@product, review), method: :delete, class:"review-delete-btn", data: {
-             confirm: "Are you sure?"
-         })  %>
-         </div>
-         <% end %>
-        </div>
+        <%= link_to("Delete review", product_review_path(@product, review), method: :delete, class:"review-delete-btn", data: {
+            confirm: "Are you sure?"
+        })  %>
     </div>
+    <% end %>
+ </div>
+ </div>
     <% end %>
  </div>
 

@@ -29,8 +29,9 @@ gem 'bcrypt', '~> 3.1.7'
   gem 'jquery-rails'
   gem "selectize-rails"
   gem 'delayed_job_active_record' 
-
   gem 'delayed_job_web'
+  gem 'active_model_serializers'
+  gem 'rack-cors'
  
 
 group :development, :test do
@@ -41,7 +42,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.0.beta2'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
-  # gem 'faker', '~> 2.2', '>= 2.2.1'
+  gem 'faker', '~> 2.2', '>= 2.2.1'
   gem "nyan-cat-formatter"
   gem "letter_opener"
 end
